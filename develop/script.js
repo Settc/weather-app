@@ -14,24 +14,45 @@
 
 // var queryURL 
 // var userSearch 
-
+var key = "168da4ba9cbcfa0cf03a671a6fe35d4c"
+var queryUV
+var latitude
+var longitude
 
 $("#searchButton").on("click", function(ev) {
 
     ev.preventDefault()
 
     var userSearch = $("input[type='search']").val()
-    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userSearch}&appid=168da4ba9cbcfa0cf03a671a6fe35d4c`
+    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userSearch}&units=imperial&appid=${key}`
+    
 
     $.ajax({
         url: queryURL,
         method: "GET"
       }).then(function(response) {
           console.log(response)
+          console.log(response.coord.lat)
+          
+          latitude = response.coord.lat
+          longitude = response.coord.lon
+          queryUV = `https://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=${key}` 
+          $("#temperature").text(Math.floor(response.main.temp))
           $("#cityName").text(response.name)
-          $("#humidity").text(response.humidity)
+          $("#humidity").text(response.main.humidity)
+          $("#wind").text(Math.floor(response.wind.speed))
+          
+          $.ajax({
+            url:queryUV,
+            method: "GET"
+        }).then(function(uvResponse) {
+            console.log(uvResponse)
+            $("#uv").text(uvResponse.value)
+        })
+            
+    
       })
-
+    
     
     
       
