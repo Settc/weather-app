@@ -11,3 +11,31 @@
 // THEN I am again presented with current and future conditions for that city
 // WHEN I open the weather dashboard
 // THEN I am presented with the last searched city forecast
+
+// var queryURL 
+// var userSearch 
+
+
+$("#searchButton").on("click", function(ev) {
+
+    ev.preventDefault()
+
+    var userSearch = $("input[type='search']").val()
+    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userSearch}&appid=168da4ba9cbcfa0cf03a671a6fe35d4c`
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function(response) {
+          console.log(response)
+          $("#cityName").text(response.name)
+          $("#humidity").text(response.humidity)
+      })
+
+    
+    
+      
+    
+  
+
+})
