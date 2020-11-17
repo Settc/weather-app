@@ -1,3 +1,33 @@
 #cityWeather {
     border: 1px solid black;
 }
+
+#cityName {
+    
+    padding-left: 5px;
+    
+}
+
+#weatherIcon {
+    margin-left: 15px;
+}
+
+#moment {
+    margin-left: 10px;
+}
+
+h3 {
+    margin-left: 10px;
+}
+
+h5 {
+    margin-left: 20px;
+}
+
+hr {
+    background-color: crimson;
+}
+
+.forecast {
+ color: white;   
+}

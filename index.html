@@ -6,19 +6,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" 
     crossorigin="anonymous">
     <link rel="stylesheet" href="develop/style.css">
+    <script src="develop/moment.js"></script>
+    <script src="https://kit.fontawesome.com/8056a67cd2.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container w-75">
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning">
             <a class="navbar-brand" href="#"><h1>Weather</h1></a>
             <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search a city" aria-label="Search" id="search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchButton">Search</button>
+            <input class="form-control mr-sm-2 bg-white" type="search" placeholder="Search a city" aria-label="Search" id="search">
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" id="searchButton">Search</button>
             </form>
         </nav>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action "></a>
                     <a href="#" class="list-group-item list-group-item-action"></a>
@@ -32,15 +34,19 @@
                     <a href="#" class="list-group-item list-group-item-action"></a>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-sm-8">
                 <section id="cityWeather">
-                    <h2 id="cityName">
+                    <h2 id="cityName" class="">
                         <br>
+                        <h4 id="moment">
+
+                        </h4>
                         
                     </h2>
-                    <hr>
+                    
+                    
                     <h3>
-                        Temperature: <span id="temperature"></span>
+                        Temperature: <span id="temperature"></span>°<span id="weatherIcon"></span>
                     </h3>
                     
                     <h5>
@@ -55,12 +61,47 @@
                 </section>
             </div>
         </div>
+        
+        <div class="row mx-1 py-3">
+            <div class="col-md-2 col-sm-6 forecast bg-primary d-inline" id="dayOne">
+                <h6 id="dayOneMoment"></h6>
+                <div id="dayOneIcon"></div>
+                <p>Temp:<span id="dayOneTemp"></span></p>
+                <p>Humidity:<span id="dayOneHumidity"></span></p>
+            </div>
+            <div class="col-md-2 col-sm-6 forecast bg-primary d-inline" id="dayTwo">
+                <h6 id="dayTwoMoment"></h6>
+                <div id="dayTwoIcon"></div>
+                <p>Temp:<span id="dayTwoTemp"></span></p>
+                <p>Humidity:<span id="dayTwoHumidity"></span></p>
+            </div>
+            <div class="col-md-2 col-sm-6 forecast bg-primary d-inline" id="dayThree">
+                <h6 id="dayThreeMoment"></h6>
+                <div id="dayThreeIcon"></div>
+                <p>Temp:<span id="dayThreeTemp"></span></p>
+                <p>Humidity:<span id="dayThreeHumidity"></span></p>
+            </div>
+            <div class="col-md-2 col-sm-6 forecast bg-primary d-inline" id="dayFour">
+                <h6 id="dayFourMoment"></h6>
+                <div id="dayFourIcon"></div>
+                <p>Temp:<span id="dayFourTemp"></span></p>
+                <p>Humidity:<span id="dayFourHumidity"></span></p>
+            </div>
+            <div class="col-md-2 col-sm-6 forecast bg-primary d-inline" id="dayFive">
+                <h6 id="dayFiveMoment"></h6>
+                <div id="dayFiveIcon"></div>
+                <p>Temp:<span id="dayFiveTemp"></span></p>
+                <p>Humidity:<span id="dayFiveHumidity"></span></p>
+            </div>
+
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script src="develop/script.js"></script>
 </body>
 </html>
