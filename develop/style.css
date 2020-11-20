@@ -1,3 +1,19 @@
+h3 {
+    margin-left: 10px;
+}
+
+h5 {
+    margin-left: 20px;
+}
+
+hr {
+    background-color: crimson;
+}
+
+.forecast {
+    color: white;   
+   }
+
 #cityWeather {
     border: 1px solid black;
 }
@@ -16,18 +32,6 @@
     margin-left: 10px;
 }
 
-h3 {
-    margin-left: 10px;
-}
 
-h5 {
-    margin-left: 20px;
-}
 
-hr {
-    background-color: crimson;
-}
 
-.forecast {
- color: white;   
-}

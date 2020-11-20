@@ -11,6 +11,7 @@
 // THEN I am again presented with current and future conditions for that city
 // WHEN I open the weather dashboard
 // THEN I am presented with the last searched city forecast
+var searched
 
 var key = "168da4ba9cbcfa0cf03a671a6fe35d4c"
 
@@ -18,10 +19,12 @@ $("#moment").text(moment().format("MMM Do YYYY"))
 
 $("#searchButton").on("click", function(ev) {
 
+
     ev.preventDefault()
 
     var userSearch = $("input[type='search']").val()
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userSearch}&units=imperial&appid=${key}`
+    
     
 
     $.ajax({
@@ -30,6 +33,7 @@ $("#searchButton").on("click", function(ev) {
       }).then(function(response) {
           console.log(response)
           
+          searched = $("#searched").children().length
           var weather = response.weather[0].main
           var weatherIcon = $("#weatherIcon")
           var latitude = response.coord.lat
@@ -39,6 +43,13 @@ $("#searchButton").on("click", function(ev) {
           $("#cityName").text(response.name)
           $("#humidity").text(response.main.humidity)
           $("#wind").text(Math.floor(response.wind.speed))
+          $("#searched").append(`<li>${response.name}</li>`)
+          $("#searched").children("li").attr("class", "list-group-item")
+            
+            if (searched > 9) {
+                $("#searched li:first-child").remove()
+            }
+
 
             if (weather === "Clear") {
                 weatherIcon.html("<i class='far fa-sun'></i>")
@@ -60,7 +71,17 @@ $("#searchButton").on("click", function(ev) {
                 method: "GET"
             }).then(function(forecast) {
                 console.log(forecast)
-                console.log(forecast.list[0].main.temp)
+                console.log(forecast.list[4])
+                // $("#dayOneMoment").html(forecast.list[4].dt_txt)
+                // $("#dayTwoMoment").html(forecast.list[12].dt_txt)
+                // $("#dayThreeMoment").html(forecast.list[20].dt_txt)
+                // $("#dayFourMoment").html(forecast.list[28].dt_txt)
+                // $("#dayFiveMoment").html(forecast.list[36].dt_txt)
+                var dayOne = forecast.list[4]
+                var dayTwo = forecast.list[12]
+                var dayThree = forecast.list[20]
+                var dayFour = forecast.list[28]
+                var dayFive = forecast.list[36]
             })
                     
     
