@@ -13,7 +13,7 @@
 // THEN I am presented with the last searched city forecast
 var searched
 var userSearch 
-
+var icon
 
 
 var key = "168da4ba9cbcfa0cf03a671a6fe35d4c"
@@ -26,6 +26,11 @@ $("document").ready(function() {
         userSearch = localStorage.getItem("prevSearch")
         weatherSearch
     })
+// var getIcon = function(response, index) {
+//     icon = response
+//     console.log(forecast.list[index].weather[0].icon)
+//     iconURL = `http://openweathermap.org/img/w${icon}.png`
+// }
 
 function weatherSearch(ev){
 
@@ -34,6 +39,7 @@ function weatherSearch(ev){
 
     userSearch = $("input[type='search']").val()
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userSearch}&units=imperial&appid=${key}`
+    
     localStorage.setItem("prevSearch", userSearch)
 
     
@@ -44,13 +50,15 @@ function weatherSearch(ev){
         method: "GET"
       }).then(function(response) {
           console.log(response)
-          
+          icon = response.weather[0].icon
+          var iconURL = `http://openweathermap.org/img/w/${icon}.png`
           searched = $("#searched").children().length
-          var weather = response.weather[0].main
-          var weatherIcon = $(".weatherIcon")
+        //   var weather = response.weather[0].main
+        //   var weatherIcon = $("#weatherIcon")
           var latitude = response.coord.lat
           var longitude = response.coord.lon
           var queryUV = `https://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=${key}` 
+          $("#weatherIcon").html(`<img src='${iconURL}'></img>`)
           $("#temperature").text(Math.floor(response.main.temp))
           $("#cityName").text(response.name)
           $("#humidity").text(response.main.humidity)
@@ -63,11 +71,11 @@ function weatherSearch(ev){
             }
 
 
-            if (weather === "Clear") {
-                weatherIcon.html("<i class='far fa-sun'></i>")
-            }   else if (weather === "Clouds") {
-                weatherIcon.html("<i class='fas fa-cloud'></i>")
-            }
+            // if (weather === "Clear") {
+            //     weatherIcon.html("<i class='far fa-sun'></i>")
+            // }   else if (weather === "Clouds") {
+            //     weatherIcon.html("<i class='fas fa-cloud'></i>")
+            // }
           
           $.ajax({
             url:queryUV,
@@ -88,17 +96,18 @@ function weatherSearch(ev){
             $.ajax({
                 url:queryForecast,
                 method: "GET"
-            }).then(function(forecast) {
+            }).then(function(response) {
 
-                    var icon = forecast.list[i].weather[0].icon
+                    // getIcon(response)
+                    
                     var index = (-2)
                     $("#fiveDay").children("div").empty()
                     $("#fiveDay").children("div").each(function() {
                         
                         index += 8
                         console.log(index)
-                        $(this).append("<h6>" + forecast.list[index].dt_txt + "</h6>")
-                        $(this).append("<span class='weatherIcon'></span>")
+                        $(this).append("<h6>" + response.list[index].dt_txt + "</h6>")
+                        $(this).append(`<img src='${iconURL}'></img>`)
                     })
                     
 
