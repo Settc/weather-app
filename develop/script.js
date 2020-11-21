@@ -13,12 +13,13 @@
 // THEN I am presented with the last searched city forecast
 var searched
 var userSearch 
-var icon
+
 
 
 var key = "168da4ba9cbcfa0cf03a671a6fe35d4c"
 
-$("#moment").text(moment().format("MMM Do YYYY"))
+var moment  = moment().format("MMM Do YYYY")
+$("#moment").text(moment)
 
 $("#searchButton").on("click", weatherSearch)
 
@@ -50,7 +51,7 @@ function weatherSearch(ev){
         method: "GET"
       }).then(function(response) {
           console.log(response)
-          icon = response.weather[0].icon
+          var icon = response.weather[0].icon
           var iconURL = `http://openweathermap.org/img/w/${icon}.png`
           searched = $("#searched").children().length
         //   var weather = response.weather[0].main
@@ -97,40 +98,51 @@ function weatherSearch(ev){
                 url:queryForecast,
                 method: "GET"
             }).then(function(response) {
-
-                    // getIcon(response)
-                    
-                    var index = (-2)
-                    $("#fiveDay").children("div").empty()
-                    $("#fiveDay").children("div").each(function() {
-                        
-                        index += 8
-                        console.log(index)
-                        $(this).append("<h6>" + response.list[index].dt_txt + "</h6>")
-                        $(this).append(`<img src='${iconURL}'></img>`)
-                    })
-                    
-
-            
                 
-                console.log(forecast)
-                console.log(forecast.list[4])
                 
-              
+                var index = (-2)
 
-            })
+                $("#fiveDay").children("div").empty()
+
+                $("#fiveDay").children("div").each(function() {
+                  
+                    index += 8
+                    var forecastIcon = response.list[index].weather[0].icon
+                    var forecastIconUrl = `http://openweathermap.org/img/w/${forecastIcon}.png`
                     
-    
-      })
-    }
+                    console.log(index)
+                    console.log(response)
+                    $(this).append(`<p>${response.list[index].dt_txt}</p>`)
+                    $(this).append(`<img src='${forecastIconUrl}'></img>`)
+                    $(this).append(`<p class="mr-5">Temperature:${Math.round(response.list[index].main.temp)}`)
+                    $(this).append(`<p>Humidity:${response.list[index].main.humidity}`)
+                    $(this).addClass("border border-dark")
+                    $(this).css("padding", "5px")
+                
+                })
+                })
+                
+                
+                })
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
-    
-
-      
-    
-    
-    
-    
-      
-    
-  
+                                
