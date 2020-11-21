@@ -12,18 +12,30 @@
 // WHEN I open the weather dashboard
 // THEN I am presented with the last searched city forecast
 var searched
+var userSearch 
+
+
 
 var key = "168da4ba9cbcfa0cf03a671a6fe35d4c"
 
 $("#moment").text(moment().format("MMM Do YYYY"))
 
-$("#searchButton").on("click", function(ev) {
+$("#searchButton").on("click", weatherSearch)
+
+$("document").ready(function() {
+        userSearch = localStorage.getItem("prevSearch")
+        weatherSearch
+    })
+
+function weatherSearch(ev){
 
 
     ev.preventDefault()
 
-    var userSearch = $("input[type='search']").val()
+    userSearch = $("input[type='search']").val()
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userSearch}&units=imperial&appid=${key}`
+    localStorage.setItem("prevSearch", userSearch)
+
     
     
 
@@ -35,7 +47,7 @@ $("#searchButton").on("click", function(ev) {
           
           searched = $("#searched").children().length
           var weather = response.weather[0].main
-          var weatherIcon = $("#weatherIcon")
+          var weatherIcon = $(".weatherIcon")
           var latitude = response.coord.lat
           var longitude = response.coord.lon
           var queryUV = `https://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=${key}` 
@@ -61,8 +73,15 @@ $("#searchButton").on("click", function(ev) {
             url:queryUV,
             method: "GET"
         }).then(function(uvResponse) {
-            console.log(uvResponse)
+            console.log()
             $("#uv").text(uvResponse.value)
+            if (uvResponse.value < 3) {
+                $("#uv").css("background-color", "green")
+            } else if (uvResponse.value > 3 && uvResponse.value < 7) {
+                $("#uv").css("background-color", "yellow")
+            } else {
+                $("#uv").css("background-color", "red")
+            }
         })
         
             var queryForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${userSearch}&units=imperial&appid=${key}`
@@ -70,23 +89,35 @@ $("#searchButton").on("click", function(ev) {
                 url:queryForecast,
                 method: "GET"
             }).then(function(forecast) {
+
+                    var icon = forecast.list[i].weather[0].icon
+                    var index = (-2)
+                    $("#fiveDay").children("div").empty()
+                    $("#fiveDay").children("div").each(function() {
+                        
+                        index += 8
+                        console.log(index)
+                        $(this).append("<h6>" + forecast.list[index].dt_txt + "</h6>")
+                        $(this).append("<span class='weatherIcon'></span>")
+                    })
+                    
+
+            
+                
                 console.log(forecast)
                 console.log(forecast.list[4])
-                // $("#dayOneMoment").html(forecast.list[4].dt_txt)
-                // $("#dayTwoMoment").html(forecast.list[12].dt_txt)
-                // $("#dayThreeMoment").html(forecast.list[20].dt_txt)
-                // $("#dayFourMoment").html(forecast.list[28].dt_txt)
-                // $("#dayFiveMoment").html(forecast.list[36].dt_txt)
-                var dayOne = forecast.list[4]
-                var dayTwo = forecast.list[12]
-                var dayThree = forecast.list[20]
-                var dayFour = forecast.list[28]
-                var dayFive = forecast.list[36]
+                
+              
+
             })
                     
     
       })
+    }
+
     
+
+      
     
     
     
@@ -94,5 +125,3 @@ $("#searchButton").on("click", function(ev) {
       
     
   
-
-})
