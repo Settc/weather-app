@@ -13,7 +13,7 @@ over-complicating it with attempted solutions rather than starting over with a m
 base.
 
    
-![Weather app screenshot](Capture.png)
+![Weather app screenshot](Capture.PNG)
 
 
 ### Technologies
