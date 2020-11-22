@@ -7,12 +7,14 @@ var key = "168da4ba9cbcfa0cf03a671a6fe35d4c"
 var moment  = moment().format("MMM Do YYYY")
 var queryURL 
 var index
+var a
 //Set jquery wrappers for initial functionality
 
 $("document").ready(function() {
 
     queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${localStorage.getItem("prevSearch")}&units=imperial&appid=${key}`
-    weatherSearch()          
+    weatherSearch()    
+    $("input[type='search']").text("")      
 
 })
 
@@ -22,17 +24,12 @@ $("#moment").text(moment)
 //Event handler for clicking search button. Preventing default behavior of search form.
 $("#searchButton").on("click", function(ev){
     
-    ev.preventDefault()
-    
-    
-    
-        
-
-    
-    
+    ev.preventDefault()                 
+    queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userSearch}&units=imperial&appid=${key}`
     weatherSearch()
     
 })
+
 
 //This function runs when the search is initialized.  
 function weatherSearch(){
@@ -46,20 +43,30 @@ function weatherSearch(){
     uniqueList = [...new Set(searchList)]
     index = uniqueList[0]
     
-    if (userSearch.toLowerCase() != index | $("#searched").children().text() != index ){
-        console.log(userSearch.toLowerCase())
+    
+        
+        
         var index = uniqueList.length
-        localStorage.setItem("history", uniqueList)
-        $("#searched").append("<li>" + uniqueList[index - 1].charAt(0).toUpperCase() + uniqueList[index - 1].slice(1) + "</li>") 
-        $("#searched").children("li").attr("class", "list-group-item")
-    } 
+        
+            if (uniqueList) {
+            $("#searched").append("<li>" + uniqueList[index -1].charAt(0).toUpperCase() + uniqueList[index - 1].slice(1) + "</li>")  
+            $("#searched").children("li").attr("class", "list-group-item")
+            $("#searched").children().on("click", function() {
+                 $("input[type='search']").html($(this).html())
+                queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${a}&units=imperial&appid=${key}`
+                call()
+            } )         
+        }
 
-   
+        // $("#searched").append("<li>" + uniqueList[index - 1].charAt(0).toUpperCase() + uniqueList[index - 1].slice(1) + "</li>") 
+        
+    
     queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userSearch}&units=imperial&appid=${key}`
     
-    
+    call()
     
 //First ajax call is to the general OpenWeather 1 day forecast
+function call() {
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -86,56 +93,7 @@ function weatherSearch(){
           $("#wind").text(Math.floor(response.wind.speed))
           
         
-        //Populate list from array
-        //Prevent duplicates
-
-
-          
-        //   $("#searched").append(`<li>${response.name}</li>`)
-        //   $("#searched").children("li").attr("class", "list-group-item")
-        //   $("#searched").children("li").on("click", function() {
-        //     $("input[type='search']").val($(this).html())
-        //     weatherSearch()
-        //   })
-            
-
-
-            //     if ($(this).text() == searchList[i]) {
-            //     $("input[type='search']").val($(this).html())
-            //     weatherSearch()
-                
-            // }   else {
-            //     $("#searched").append(`<li>${response.name}</li>`)
-                
-            //     weatherSearch()
-             
-              
-            // }
-            // }
-             
-            // if ($(this).val() != searchList[i]) {
-            //     $("#searched").append(`<li>${response.name}</li>`)
-            //     $("#searched").children("li").attr("class", "list-group-item")
-                
-            //         $("input[type='search']").val($(this).html())
-            //         weatherSearch()
-                    
-            // }   else {
-                // $("input[type='search']").val($(this).html())
-                //     weatherSearch()
-            // }                                 
-     
-    
-          
-             
-
-
-          
-            
-        //Checking for amount of children of #searched, once it hits 10 it begins removing 
-        //the first entry every time a search is done
-
-            if (searched > 9) {
+          if (searched > 9) {
                 $("#searched li:first-child").remove()
             }
         
@@ -184,12 +142,12 @@ function weatherSearch(){
                 })
                 })
                 
-                
+                // userSearch = ""
                 })
 
-                
+            }  
                 }
-                
+        
                 
                 
                 
